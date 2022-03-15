@@ -1,7 +1,7 @@
 // errors4.rs
 // Make this test pass! Execute `rustlings hint errors4` for hints :)
 
-// I AM NOT DONE
+use std::convert::TryInto;
 
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
@@ -14,7 +14,12 @@ enum CreationError {
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-        Ok(PositiveNonzeroInteger(value))
+        if value == 0 {
+            return Err(CreationError::Zero);
+        } else if value < 0 {
+            return Err(CreationError::Negative);
+        }
+        Ok(PositiveNonzeroInteger(value.try_into().unwrap()))
     }
 }
 
