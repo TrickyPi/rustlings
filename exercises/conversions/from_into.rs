@@ -33,10 +33,21 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
-
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let person = Person::default();
+        let expected_persion = s.split(",").collect::<Vec<_>>();
+        if expected_persion.len() != 2 || expected_persion[0] == "" {
+            return person;
+        }
+        let age = match expected_persion[1].parse() {
+            Ok(value) => value,
+            Err(_) => return person,
+        };
+        Person {
+            name: expected_persion[0].to_string(),
+            age: age,
+        }
     }
 }
 
